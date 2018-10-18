@@ -11,7 +11,7 @@ class App extends Component {
 
   signOut = e => {
     e.preventDefault();
-    localStorage.clear();
+    localStorage.removeItem('jwt')
     alert("You've been signed out")
   }
 
