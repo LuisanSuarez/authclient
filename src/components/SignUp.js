@@ -1,24 +1,36 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+const axios = require('axios');
 
 
 class SignUp extends Component {
   state = {
     username: '',
     password: '',
+    department: '',
     registered: false
   }
 
-  handleChange event => {
+  componentDidMount() {
+    this.setState({ registered:false })
+  }
+
+  handleChange = event => {
     const {name, value} = event.target
     this.setState({ [name] : value})
   }
 
-  signUp () => {
+  signUp = (e) => {
+    e.preventDefault();
+    let newUser = {
+      username: this.state.username,
+      password: this.state.password,
+      department: this.state.department,
+    }
     axios
-    .post('http://localhost:3333/api/register', this.state)
+    .post('http://localhost:3333/api/register', newUser)
     .then(res => {
-        console.log('Axios SignIn - res.data:', res.data);
+        console.log('Axios SignIn - res:', res);
         if (res.data){
           localStorage.setItem('jwt', res.data.token)
           this.setState({ registered: true })
@@ -31,34 +43,36 @@ class SignUp extends Component {
 
   render() {
     if (this.state.registered) {
-      this.setState({ registered: false })
      return <Redirect to='/users' />
    }
     return (
       <form onSubmit={this.signUp}>
+        <label>Username</label>
         <input
           name='username'
           type='text'
           placeholder='username'
           value={this.state.username}
           onChange={this.handleChange}
-          ><label>Username</label>
+          >
         </input>
+        <label>Password</label>
         <input
           name='password'
           type='password'
           placeholder='password'
           value={this.state.password}
           onChange={this.handleChange}
-          ><label>Password</label>
+          >
         </input>
+        <label>Department</label>
         <input
           name='department'
           type='text'
           placeholder='department'
-          value={this.state.password}
+          value={this.state.department}
           onChange={this.handleChange}
-          ><label>Deparment</label>
+          >
         </input>
         <button> Sign Up </button>
       </form>

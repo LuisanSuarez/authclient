@@ -1,24 +1,40 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 
 class SignIn extends Component {
   state = {
     username: '',
-    password: ''
+    password: '',
+    registered: false
   }
 
-  handleChange event => {
+
+componentDidMount() {
+  this.setState({ registered:false })
+}
+  handleChange = event => {
     const {name, value} = event.target
     this.setState({ [name] : value})
   }
 
-  signIn () => {
+
+  signIn = (event) => {
+    event.preventDefault();
+    let newUser = {
+      username: this.state.username,
+      password: this.state.password,
+      department: this.state.department,
+    }
     axios
-    .post('http://localhost:3333/api/login', this.state)
+    .post('http://localhost:3333/api/login', newUser)
     .then(res => {
         console.log('Axios SignIn - res.data:', res.data);
-        localStorage.setItem('jwt', res.data.token)
+        if (res.data){
+          localStorage.setItem('jwt', res.data.token)
+          this.setState({ registered: true })
+        }
         })
         .catch(error => {
           console.error('Server Error', error);
@@ -26,23 +42,29 @@ class SignIn extends Component {
   }
 
   render() {
+    if (this.state.registered) {
+     return <Redirect to='/users' />
+   }
+   console.log('State:', this.state);
     return (
       <form onSubmit={this.signIn}>
+        <label>Username</label>
         <input
           name='username'
           type='text'
           placeholder='username'
           value={this.state.username}
           onChange={this.handleChange}
-          ><label>Username</label>
+          >
         </input>
+        <label>Password</label>
         <input
           name='password'
           type='password'
           placeholder='password'
           value={this.state.password}
           onChange={this.handleChange}
-          ><label>Password</label>
+          >
         </input>
         <button> Sign In</button>
       </form>

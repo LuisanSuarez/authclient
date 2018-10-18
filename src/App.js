@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Route } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import SignUp from './components/SignUp'
 import SignIn from './components/SignIn'
-import Users from './components/Users'
+import Users from './components/Users.js'
 
 
 class App extends Component {
@@ -16,6 +16,9 @@ class App extends Component {
           <Route path='/signup' component={SignUp} />
           <Route path='/signin' component={SignIn} />
           <Route path='/users' component={Users} />
+          <Link to='/signup'><div>Sign Up</div></Link>
+          <Link to='/signin'><div>Sign In</div></Link>
+          <Link to='/users'><div>Users</div></Link>
 
         </header>
       </div>
