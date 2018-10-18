@@ -22,6 +22,8 @@ class Users extends Component {
       })
       .catch(err => {
         console.error(err);
+        alert("You don't have access. Please sign in!")
+        this.props.history.push('/signin')
       })
   }
 

@@ -30,7 +30,6 @@ componentDidMount() {
     axios
     .post('http://localhost:3333/api/login', newUser)
     .then(res => {
-        console.log('Axios SignIn - res.data:', res.data);
         if (res.data){
           localStorage.setItem('jwt', res.data.token)
           this.setState({ registered: true })
@@ -45,7 +44,6 @@ componentDidMount() {
     if (this.state.registered) {
      return <Redirect to='/users' />
    }
-   console.log('State:', this.state);
     return (
       <form onSubmit={this.signIn}>
         <label>Username</label>
