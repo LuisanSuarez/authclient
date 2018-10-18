@@ -8,6 +8,13 @@ import Users from './components/Users.js'
 
 
 class App extends Component {
+
+  signOut = e => {
+    e.preventDefault();
+    localStorage.clear();
+    alert("You've been signed out")
+  }
+
   render() {
     return (
       <div className="App">
@@ -19,6 +26,7 @@ class App extends Component {
           <Link to='/signup'><div>Sign Up</div></Link>
           <Link to='/signin'><div>Sign In</div></Link>
           <Link to='/users'><div>Users</div></Link>
+          <button onClick={this.signOut}>SignOut</button>
 
         </header>
       </div>
