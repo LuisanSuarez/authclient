@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, withRouter } from 'react-router-dom'
 import SignUp from './components/SignUp'
 import SignIn from './components/SignIn'
 import Users from './components/Users.js'
 
 
 class App extends Component {
+  constructor(props){
+    super(props);
+  }
 
   signOut = e => {
     e.preventDefault();
     localStorage.removeItem('jwt')
     alert("You've been signed out")
+    this.props.history.push('/signin')
   }
 
   render() {
+    console.log(this.props);
     return (
       <div className="App">
         <header className="App-header">
@@ -34,4 +39,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
